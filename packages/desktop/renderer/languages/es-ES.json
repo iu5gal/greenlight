@@ -28,11 +28,6 @@
     "settings": {
       "sidebar": {
         "about": "Acerca de",
-        "common": {
-          "resetDefaultsBtn": "Restablecer valores predeterminados",
-          "resetDefaultsConfirm": "¿Restablecer los ajustes de esta página a sus valores predeterminados?",
-          "savedNotice": "Guardado"
-        },
         "streaming": "Streaming",
         "input": "Controles",
         "videoAudio": "Video y audio",
@@ -82,6 +77,11 @@
         "controllerDetectedDescription": "Si tienes un mando conectado pero no aparece aquí, intenta pulsar cualquier botón en el mando para que el sistema lo detecte.",
         "noControllerDetected": "No se ha detectado ningún mando",
         "keyboardMappingsTitle": "Asignación de teclas"
+      },
+      "common": {
+        "resetDefaultsBtn": "Restablecer valores predeterminados",
+        "resetDefaultsConfirm": "¿Restablecer los ajustes de esta página a sus valores predeterminados?",
+        "savedNotice": "Guardado"
       },
       "streaming": {
         "pageTitle": "Configuración: Streaming",
