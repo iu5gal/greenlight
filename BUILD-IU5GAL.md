@@ -19,6 +19,7 @@ pull request verso `unknownskl/greenlight` e viene poi fusa qui.
 | [#1718](https://github.com/unknownskl/greenlight/pull/1718) | `fix/settings-polish` | Rifiniture alle impostazioni: ripristino dei default, porta Web UI validata, descrizioni |
 | [#1719](https://github.com/unknownskl/greenlight/pull/1719) | `feature/i18n-system-language` | Lingua salvata applicata subito, finestre native tradotte, lingua di sistema al primo avvio |
 | [#1720](https://github.com/unknownskl/greenlight/pull/1720) | `fix/macos-controller` | Controller e vibrazione su macOS dalla 2.4.2 |
+| [#1721](https://github.com/unknownskl/greenlight/pull/1721) | `fix/ui-polish` | Voce di menu evidenziata in base alla pagina aperta; conto alla rovescia della coda corretto, con barra di avanzamento |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (di vishalrao8) | Numerazione dei controller in Impostazioni → Input. Fusa solo qui |
 
 Lo stato aggiornato di ogni PR è nella pagina della PR stessa: quando il maintainer ne integra una, qui

@@ -19,6 +19,7 @@ becomes a pull request to `unknownskl/greenlight`, and is then merged here.
 | [#1718](https://github.com/unknownskl/greenlight/pull/1718) | `fix/settings-polish` | Settings refinements: reset to defaults, validated Web UI port, descriptions |
 | [#1719](https://github.com/unknownskl/greenlight/pull/1719) | `feature/i18n-system-language` | Saved language applied at startup, native dialogs translated, system language on first run |
 | [#1720](https://github.com/unknownskl/greenlight/pull/1720) | `fix/macos-controller` | Controller input and vibration on macOS since 2.4.2 |
+| [#1721](https://github.com/unknownskl/greenlight/pull/1721) | `fix/ui-polish` | Menu entry highlighted from the current page; queue countdown fixed, with a progress bar |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (by vishalrao8) | Controller numbering in Settings → Input. Merged here only |
 
 The current status of each PR is on the PR page itself: once the maintainer merges one, it simply becomes
