@@ -11,6 +11,8 @@
 #   To register it again, without building anything:
 #     git push origin iu5gal-build:refs/heads/ci/build-iu5gal-register
 #     (wait for the empty run, then: git push origin --delete ci/build-iu5gal-register)
+# - Only the installers are published: the app does not use electron-updater, so the latest*.yml and
+#   .blockmap files that electron-builder also produces would never be read.
 # - The version and the "repository" field are changed on the runner only (package.json is not
 #   committed), so the app checks the releases of this fork for updates instead of upstream's.
 
@@ -137,8 +139,6 @@ jobs:
             packages/desktop/dist/*.deb
             packages/desktop/dist/*.exe
             packages/desktop/dist/*.zip
-            packages/desktop/dist/*.blockmap
-            packages/desktop/dist/latest*.yml
 
   release:
     name: Publish release
