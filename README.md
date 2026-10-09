@@ -1,7 +1,11 @@
+> **This is IU5GAL's personal build of Greenlight** (`iu5gal-build`): the original `main-v2` plus pending fixes
+> proposed upstream. What it contains and how to build it: **[BUILD-IU5GAL.en.md](BUILD-IU5GAL.en.md)** (English) ·
+> **[BUILD-IU5GAL.md](BUILD-IU5GAL.md)** (italiano). The official project is
+> [unknownskl/greenlight](https://github.com/unknownskl/greenlight).
+
 # Greenlight
 
-[![Build/Desktop](https://github.com/unknownskl/greenlight/actions/workflows/build_desktop.yml/badge.svg)](https://github.com/unknownskl/greenlight/actions/workflows/build_desktop.yml)
-[![Build/Docs](https://github.com/unknownskl/greenlight/actions/workflows/build_docs.yml/badge.svg)](https://github.com/unknownskl/greenlight/actions/workflows/build_docs.yml)
+[![Build/release](https://github.com/unknownskl/greenlight/actions/workflows/build.yml/badge.svg)](https://github.com/unknownskl/greenlight/actions/workflows/build.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=unknownskl_greenlight&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=unknownskl_greenlight)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=unknownskl_greenlight&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=unknownskl_greenlight)
@@ -19,7 +23,7 @@ _DISCLAIMER: Greenlight is not affiliated with Microsoft, Xbox or Moonlight. All
 - Support for gamepad controls
 - Supports rumble on xCloud
 - Keyboard controls
-- Build-in online friends list
+- Built-in online friends list
 
 <img src="images/main.png" width="400" /> <img src="images/stream.png" width="400" />
 
@@ -33,7 +37,7 @@ _DISCLAIMER: Greenlight is not affiliated with Microsoft, Xbox or Moonlight. All
 
 ### Compile from source
 
-See [Local development](?tab=readme-ov-file#local-development).
+See [Local development](#local-development).
 
 ## Keyboard controls
 
@@ -53,7 +57,7 @@ Keys are mapped as following by default:
 
 During the stream you can show debug statistics that contain extra data about the buffer queues and other information. To bring this up you can press `~` on your keyboard.
 
-At the bottom-left you can see the status (although not always accurate). At the top-right you can find the FPS of the video and audio decoders including the latency. At the bottom-right you can find debug information about the buffer queues and other information that is useful for debugging perposes.
+At the bottom-left you can see the status (although not always accurate). At the top-right you can find the FPS of the video and audio decoders including the latency. At the bottom-right you can find debug information about the buffer queues and other information that is useful for debugging purposes.
 
 When possible always provide this information with your issue, if it is related.
 
@@ -106,7 +110,7 @@ Create production build:
 
 ## Translations
 
-Want to help out with new translations? Help us on [https://poeditor.com/join/project/9SfHRQDbfN](Poeditor.com)
+Want to help out with new translations? Help us on [Poeditor.com](https://poeditor.com/join/project/9SfHRQDbfN)
 
 ## Changelog
 
