@@ -6,6 +6,11 @@
 #   v<upstream version>-build-iu5gal.<YYYYMMDD>  (e.g. v2.4.2-build-iu5gal.20261009).
 # - If that day's release already exists it does nothing (delete the release to build again).
 # - Run on a ref other than iu5gal-build it only builds (artifacts, no release).
+# - This file is not on the default branch of the fork, so GitHub registers the workflow only when it
+#   has a run, and forgets it when its last run is deleted (then "gh workflow run" answers 404).
+#   To register it again, without building anything:
+#     git push origin iu5gal-build:refs/heads/ci/build-iu5gal-register
+#     (wait for the empty run, then: git push origin --delete ci/build-iu5gal-register)
 # - The version and the "repository" field are changed on the runner only (package.json is not
 #   committed), so the app checks the releases of this fork for updates instead of upstream's.
 
@@ -13,6 +18,9 @@ name: Build IU5GAL
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - ci/build-iu5gal-register   # only used to register the workflow, see above
 
 permissions:
   contents: read
@@ -27,6 +35,7 @@ env:
 jobs:
   plan:
     name: Plan
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       run: ${{ steps.p.outputs.run }}
