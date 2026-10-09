@@ -56,6 +56,19 @@ yarn desktop electron . --user-data-dir="$HOME/greenlight-test-profile"
 - The "Fixes" of #1720 for #1704 covers the controller not being detected in 2.4.2; the 2.4.1 case on
   macOS 27 may be a separate problem.
 
+## Releases
+
+Releases are built by GitHub Actions on demand, not automatically:
+
+```bash
+gh workflow run build-iu5gal.yml --repo iu5gal/greenlight --ref iu5gal-build
+```
+
+It builds macOS, Linux and Windows and publishes a release named `v<version>-build-iu5gal.<YYYYMMDD>`
+(for example `v2.4.2-build-iu5gal.20261009`) with the same files as the official ones, apart from the
+Flatpak. If that day's release already exists it does nothing. The builds are unsigned: on macOS use
+right-click → Open the first time. The app checks the releases of this fork for updates.
+
 ## Keeping the build up to date
 
 ```bash

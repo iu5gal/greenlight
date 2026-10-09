@@ -1,0 +1,177 @@
+# Build and release of IU5GAL's personal build (branch iu5gal-build). Manual launch only.
+# Lives only on iu5gal-build: never propose it upstream.
+#
+# Launch:  gh workflow run build-iu5gal.yml --repo iu5gal/greenlight --ref iu5gal-build
+# - Builds macOS, Linux and Windows and publishes a release tagged
+#   v<upstream version>-build-iu5gal.<YYYYMMDD>  (e.g. v2.4.2-build-iu5gal.20261009).
+# - If that day's release already exists it does nothing (delete the release to build again).
+# - Run on a ref other than iu5gal-build it only builds (artifacts, no release).
+# - The version and the "repository" field are changed on the runner only (package.json is not
+#   committed), so the app checks the releases of this fork for updates instead of upstream's.
+
+name: Build IU5GAL
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-iu5gal-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  node_version: 24
+
+jobs:
+  plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.p.outputs.run }}
+      version: ${{ steps.p.outputs.version }}
+      tag: ${{ steps.p.outputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Decide whether to build, and the version
+        id: p
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          base=$(node -p "require('./packages/desktop/package.json').version")
+          run=true
+          reason=""
+
+          day=$(TZ=Europe/Rome date +%Y%m%d)
+
+          version="${base}-build-iu5gal.${day}"
+          tag="v${version}"
+
+          if [ "$run" = true ] && gh release view "$tag" >/dev/null 2>&1; then
+            run=false
+            reason="release $tag already exists"
+          fi
+
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if [ "$run" = true ]; then
+            echo "Building $version (tag $tag)"
+          else
+            echo "::notice::Nothing to build: $reason"
+            echo "Nothing to build: $reason" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  build:
+    name: Build ${{ matrix.name }}
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: macOS, os: macos-latest, flag: --mac }
+          - { name: Linux, os: ubuntu-latest, flag: --linux }
+          - { name: Windows, os: windows-latest, flag: --win }
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.node_version }}
+          cache: yarn
+
+      - name: Set build version and update source (runner only, not committed)
+        working-directory: packages/desktop
+        env:
+          BUILD_VERSION: ${{ needs.plan.outputs.version }}
+          REPO_URL: git+https://github.com/${{ github.repository }}.git
+        run: |
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            p.version = process.env.BUILD_VERSION;
+            p.repository = { type: 'git', url: process.env.REPO_URL };
+            fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
+          "
+          grep -E '"(version)"' package.json
+          grep -A3 '"repository"' package.json
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Compile app
+        run: yarn desktop build --no-pack
+
+      - name: Package (${{ matrix.name }})
+        working-directory: packages/desktop
+        run: yarn electron-builder ${{ matrix.flag }} --publish never
+
+      - name: List results
+        run: ls -la packages/desktop/dist
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: greenlight-${{ matrix.name }}
+          if-no-files-found: error
+          path: |
+            packages/desktop/dist/*.dmg
+            packages/desktop/dist/*.AppImage
+            packages/desktop/dist/*.deb
+            packages/desktop/dist/*.exe
+            packages/desktop/dist/*.zip
+            packages/desktop/dist/*.blockmap
+            packages/desktop/dist/latest*.yml
+
+  release:
+    name: Publish release
+    needs: [plan, build]
+    if: needs.plan.outputs.run == 'true' && github.ref == 'refs/heads/iu5gal-build'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: release-files
+          merge-multiple: true
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.plan.outputs.tag }}
+          VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          prev=$(gh release list --limit 1 --json tagName --jq '.[0].tagName // empty')
+          {
+            echo "Personal build of [Greenlight](https://github.com/unknownskl/greenlight): upstream \`main-v2\` plus fixes proposed upstream but not merged yet."
+            echo "What it contains and how it is built: [BUILD-IU5GAL.en.md](https://github.com/${GITHUB_REPOSITORY}/blob/iu5gal-build/BUILD-IU5GAL.en.md) · [BUILD-IU5GAL.md](https://github.com/${GITHUB_REPOSITORY}/blob/iu5gal-build/BUILD-IU5GAL.md)"
+            echo
+            echo "Commit: ${GITHUB_SHA}"
+            if [ -n "$prev" ]; then
+              echo
+              echo "Changes since ${prev}:"
+              git log --first-parent --format='- %s' "${prev}..HEAD" 2>/dev/null || true
+            fi
+            echo
+            echo "_Unsigned builds: on macOS use right-click → Open the first time, or run \`xattr -dr com.apple.quarantine /Applications/Greenlight.app\`._"
+          } > notes.md
+          ls -la release-files
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Greenlight $VERSION" \
+            --notes-file notes.md \
+            --latest \
+            release-files/*
