@@ -3,6 +3,8 @@
 > **[BUILD-IU5GAL.md](BUILD-IU5GAL.md)** (italiano). The official project is
 > [unknownskl/greenlight](https://github.com/unknownskl/greenlight).
 
+[![Latest build](https://img.shields.io/github/v/release/iu5gal/greenlight?display_name=tag&label=latest%20build&color=blue)](https://github.com/iu5gal/greenlight/releases/latest)
+
 # Greenlight
 
 [![Build/release](https://github.com/unknownskl/greenlight/actions/workflows/build.yml/badge.svg)](https://github.com/unknownskl/greenlight/actions/workflows/build.yml)
