@@ -23,6 +23,7 @@ pull request verso `unknownskl/greenlight` e viene poi fusa qui.
 | [#1723](https://github.com/unknownskl/greenlight/pull/1723) | `feature/console-home` | Pulsanti accendi/spegni e aggiorna, LED di stato e id copiabile nella pagina delle console |
 | [#1724](https://github.com/unknownskl/greenlight/pull/1724) | `fix/microphone` | Corregge il microfono su macOS (permesso mancante nella firma, controllo del permesso) e aggiunge la scelta del microfono |
 | [#1725](https://github.com/unknownskl/greenlight/pull/1725) | `fix/mnk-input` | Rende alternativi Mouse e tastiera e Tastiera come gamepad, così i tasti non agiscono più due volte |
+| [#1727](https://github.com/unknownskl/greenlight/pull/1727) | `feat/mouse-keyboard-ux` | Mouse e tastiera: cursore di sensibilità del mouse, barra in alto nascosta a mouse bloccato (Cmd+Esc per liberarlo), Esc come tasto Home, tasti mappabili per gli stick |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (di vishalrao8) | Numerazione dei controller in Impostazioni → Input. Fusa solo qui |
 
 Lo stato aggiornato di ogni PR è nella pagina della PR stessa: quando il maintainer ne integra una, qui
