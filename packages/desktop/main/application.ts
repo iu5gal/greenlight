@@ -20,6 +20,9 @@ interface startupFlags {
     autoStream:string;
 }
 
+// Personal build (iu5gal-build): the main window title carries the build name. Not proposed upstream.
+const BUILD_TITLE = 'Greenlight unofficial build by iu5gal'
+
 export default class Application {
 
     private _log
@@ -215,7 +218,7 @@ export default class Application {
         this.log('electron', __filename+'[openMainWindow()] Creating new main window')
 
         const windowOptions:any = {
-            title: 'Greenlight',
+            title: BUILD_TITLE,
             backgroundColor: 'rgb(26, 27, 30)',
         }
         if(this._startupFlags.fullscreen === true){
@@ -226,6 +229,14 @@ export default class Application {
             width: 1280,
             height: 800,
             ...windowOptions,
+        })
+
+        // Pages set their own "Greenlight - ..." title: keep it, with the build name in place of "Greenlight".
+        const mainWindow = this._mainWindow
+        mainWindow.on('page-title-updated', (event, title) => {
+            event.preventDefault()
+            const isGreenlightTitle = title.startsWith('Greenlight') && !title.startsWith(BUILD_TITLE)
+            mainWindow.setTitle(isGreenlightTitle ? BUILD_TITLE + title.slice('Greenlight'.length) : title)
         })
 
         this._mainWindow.on('show', () => {
