@@ -7,6 +7,8 @@ import Button from '../../components/ui/button'
 
 import { useSettings } from '../../context/userContext'
 import { defaultSettings } from '../../context/userContext.defaults'
+import { STICK_KEYS } from '../../lib/stickkeys'
+import { MOUSE_SENSITIVITY_MAX, MOUSE_SENSITIVITY_MIN, normalizeMouseSensitivity } from '../../lib/mousesensitivity'
 
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +22,7 @@ function invert(obj) {
 
 function KeySettings({keyConfigs, setKeyConfig}) {
     const { t } = useTranslation()
-    const mappableButtons = ['DPadUp', 'DPadDown', 'DPadLeft', 'DPadRight', 'A', 'B', 'X', 'Y', 'View', 'Menu', 'Nexus', 'LeftShoulder', 'RightShoulder', 'LeftTrigger', 'RightTrigger', 'LeftThumb', 'RightThumb']
+    const mappableButtons = ['DPadUp', 'DPadDown', 'DPadLeft', 'DPadRight', 'A', 'B', 'X', 'Y', 'View', 'Menu', 'Nexus', 'LeftShoulder', 'RightShoulder', 'LeftTrigger', 'RightTrigger', 'LeftThumb', 'RightThumb', ...STICK_KEYS]
     // console.log('KEYS:', keyConfigs, mappableButtons)
     keyConfigs = invert(keyConfigs)
     return <p>
@@ -60,6 +62,30 @@ function KeySettings({keyConfigs, setKeyConfig}) {
                         case 'RightThumb':
                             fullBtnText = t('settings.input.rightThumb')
                             break
+                        case 'LeftStickUp':
+                            fullBtnText = t('settings.input.leftStickUp')
+                            break
+                        case 'LeftStickDown':
+                            fullBtnText = t('settings.input.leftStickDown')
+                            break
+                        case 'LeftStickLeft':
+                            fullBtnText = t('settings.input.leftStickLeft')
+                            break
+                        case 'LeftStickRight':
+                            fullBtnText = t('settings.input.leftStickRight')
+                            break
+                        case 'RightStickUp':
+                            fullBtnText = t('settings.input.rightStickUp')
+                            break
+                        case 'RightStickDown':
+                            fullBtnText = t('settings.input.rightStickDown')
+                            break
+                        case 'RightStickLeft':
+                            fullBtnText = t('settings.input.rightStickLeft')
+                            break
+                        case 'RightStickRight':
+                            fullBtnText = t('settings.input.rightStickRight')
+                            break
                         case 'View':
                             fullBtnText = t('settings.input.view')
                             break
@@ -76,8 +102,9 @@ function KeySettings({keyConfigs, setKeyConfig}) {
 
                     return <p key={btn}>
                         <label>{fullBtnText}</label>
-                        <label style={{minWidth: 0}}>
+                        <label style={{minWidth: 0, display: 'flex', alignItems: 'center', gap: '8px'}}>
                             <input type='text' className='text' onKeyUp={(e) => setKeyConfig(btn, e)} value={keyConfigs[btn] ?? t('settings.input.none')}/>
+                            { keyConfigs[btn] !== undefined ? <Button label={<i className="fa-solid fa-xmark"></i>} title={t('settings.input.none')} className='btn-small' onClick={() => setKeyConfig(btn, { key: 'Escape', target: { blur: () => undefined } })}></Button> : '' }
                         </label>
                     </p>
                 }
@@ -130,6 +157,13 @@ function SettingsInput() {
             ...settings,
             input_mousekeyboard: enable,
             input_newgamepad: enable || !keyboardToGamepad,
+        })
+    }
+
+    function setMouseSensitivityInput(e){
+        setSettings({
+            ...settings,
+            input_mouse_sensitivity: normalizeMouseSensitivity(Number(e.target.value)),
         })
     }
 
@@ -221,6 +255,15 @@ function SettingsInput() {
 
                     <p>
                         <small>{t('settings.input.legacyWarning')}</small>
+                    </p>
+                </Card>
+
+                <Card hidden={ !settings.input_mousekeyboard }>
+                    <p>
+                        <label>{t('settings.input.mouseSensitivity')}</label>
+                        <input type='range' min={ MOUSE_SENSITIVITY_MIN } max={ MOUSE_SENSITIVITY_MAX } step='1' value={ normalizeMouseSensitivity(settings.input_mouse_sensitivity) } onChange={ setMouseSensitivityInput } />
+                        ({ normalizeMouseSensitivity(settings.input_mouse_sensitivity) }%)<br />
+                        <small>{t('settings.input.mouseSensitivityDescription')}</small>
                     </p>
                 </Card>
 
