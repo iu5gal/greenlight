@@ -137,7 +137,8 @@ jobs:
           mkdir release-out
           # Every file in dist (not the *-unpacked folders). electron-builder writes these two
           # with the same name on every OS, so they get the OS name in front to not overwrite each other.
-          for f in $(find packages/desktop/dist -maxdepth 1 -type f); do
+          # (print0: the Windows installer is called "Greenlight Setup ....exe", with spaces)
+          find packages/desktop/dist -maxdepth 1 -type f -print0 | while IFS= read -r -d '' f; do
             name=$(basename "$f")
             case "$name" in
               builder-debug.yml|builder-effective-config.yaml) name="${OS_NAME}-${name}" ;;
