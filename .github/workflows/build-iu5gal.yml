@@ -11,8 +11,9 @@
 #   To register it again, without building anything:
 #     git push origin iu5gal-build:refs/heads/ci/build-iu5gal-register
 #     (wait for the empty run, then: git push origin --delete ci/build-iu5gal-register)
-# - Only the installers are published: the app does not use electron-updater, so the latest*.yml and
-#   .blockmap files that electron-builder also produces would never be read.
+# - Every file electron-builder leaves in dist is published (installers, latest*.yml, .blockmap, debug
+#   files), but not the *-unpacked folders. builder-debug.yml and builder-effective-config.yaml are the
+#   same on every OS, so they are published with the OS name in front.
 # - The version and the "repository" field are changed on the runner only (package.json is not
 #   committed), so the app checks the releases of this fork for updates instead of upstream's.
 
@@ -129,16 +130,27 @@ jobs:
       - name: List results
         run: ls -la packages/desktop/dist
 
+      - name: Collect release files
+        env:
+          OS_NAME: ${{ matrix.name }}
+        run: |
+          mkdir release-out
+          # Every file in dist (not the *-unpacked folders). electron-builder writes these two
+          # with the same name on every OS, so they get the OS name in front to not overwrite each other.
+          for f in $(find packages/desktop/dist -maxdepth 1 -type f); do
+            name=$(basename "$f")
+            case "$name" in
+              builder-debug.yml|builder-effective-config.yaml) name="${OS_NAME}-${name}" ;;
+            esac
+            cp "$f" "release-out/${name}"
+          done
+          ls -la release-out
+
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: greenlight-${{ matrix.name }}
           if-no-files-found: error
-          path: |
-            packages/desktop/dist/*.dmg
-            packages/desktop/dist/*.AppImage
-            packages/desktop/dist/*.deb
-            packages/desktop/dist/*.exe
-            packages/desktop/dist/*.zip
+          path: release-out/*
 
   release:
     name: Publish release
