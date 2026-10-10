@@ -22,6 +22,7 @@ becomes a pull request to `unknownskl/greenlight`, and is then merged here.
 | [#1721](https://github.com/unknownskl/greenlight/pull/1721) | `fix/ui-polish` | Menu entry highlighted from the current page; queue countdown fixed, with a progress bar |
 | [#1723](https://github.com/unknownskl/greenlight/pull/1723) | `feature/console-home` | Power on/off and refresh buttons, state LED and copyable id on the consoles page |
 | [#1724](https://github.com/unknownskl/greenlight/pull/1724) | `fix/microphone` | Fixes the microphone on macOS (missing entitlement, permission check) and adds a microphone choice |
+| [#1725](https://github.com/unknownskl/greenlight/pull/1725) | `fix/mnk-input` | Makes Mouse & Keyboard and Keyboard to Gamepad mutually exclusive, so keys no longer act twice |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (by vishalrao8) | Controller numbering in Settings → Input. Merged here only |
 
 The current status of each PR is on the PR page itself: once the maintainer merges one, it simply becomes
