@@ -18,7 +18,7 @@ pull request verso `unknownskl/greenlight` e viene poi fusa qui.
 | [#1717](https://github.com/unknownskl/greenlight/pull/1717) | `feature/languages` | Francese, portoghese brasiliano, turco, cinese semplificato, giapponese, coreano; lo spagnolo diventa `es-ES.json` |
 | [#1718](https://github.com/unknownskl/greenlight/pull/1718) | `fix/settings-polish` | Rifiniture alle impostazioni: ripristino dei default, porta Web UI validata, descrizioni |
 | [#1719](https://github.com/unknownskl/greenlight/pull/1719) | `feature/i18n-system-language` | Lingua salvata applicata subito, finestre native tradotte, lingua di sistema al primo avvio |
-| [#1720](https://github.com/unknownskl/greenlight/pull/1720) | `fix/macos-controller` | Controller e vibrazione su macOS dalla 2.4.2 |
+| [#1720](https://github.com/unknownskl/greenlight/pull/1720) | `fix/macos-controller` | Controller e vibrazione su macOS dalla 2.4.2; il ciclo del controller si ferma alla fine dello stream |
 | [#1721](https://github.com/unknownskl/greenlight/pull/1721) | `fix/ui-polish` | Voce di menu evidenziata in base alla pagina aperta; conto alla rovescia della coda corretto, con barra di avanzamento |
 | [#1723](https://github.com/unknownskl/greenlight/pull/1723) | `feature/console-home` | Pulsanti accendi/spegni e aggiorna, LED di stato e id copiabile nella pagina delle console |
 | [#1724](https://github.com/unknownskl/greenlight/pull/1724) | `fix/microphone` | Corregge il microfono su macOS (permesso mancante nella firma, controllo del permesso) e aggiunge la scelta del microfono |
