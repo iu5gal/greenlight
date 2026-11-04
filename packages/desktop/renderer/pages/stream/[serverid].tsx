@@ -11,6 +11,7 @@ import CompactGamepadDriver from '../../lib/gamepaddriver'
 import { setMouseSensitivity } from '../../lib/mousesensitivitypatch'
 import { applyKeyboardSticks } from '../../lib/keyboardsticks'
 import { applyEscapeAsHome, pressHomeButton } from '../../lib/escapekey'
+import { configureStreamResolution } from '../../lib/streamresolution'
 import { useTranslation } from 'react-i18next'
 
 function Stream() {
@@ -37,6 +38,9 @@ function Stream() {
         if(xPlayer !== undefined){
             document.getElementById('streamComponentHolder').innerHTML = '<div id="streamComponent" class="size_'+settings.video_size+'"></div>'
             xPlayer.bind()
+            if(settings.stream_resolution > 0){
+                configureStreamResolution(xPlayer, settings.stream_resolution)
+            }
 
             // Set bitrates & video codec profiles
             if((streamType === 'cloud') ? settings.xcloud_bitrate : settings.xhome_bitrate > 0){
@@ -150,6 +154,7 @@ function Stream() {
             Ipc.send('streaming', 'startStream', {
                 type: streamType,
                 target: serverId,
+                resolution: settings.stream_resolution,
             }).then((result:string) => {
                 console.log('StartStream session:', result)
                 setSessionId(result)

@@ -22,7 +22,7 @@
     "@trpc/server": "^11.17.0",
     "@trpc/tanstack-react-query": "^11.18.0",
     "electron-serve": "^3.0.0",
-    "electron-store": "^11.0.2",
+    "electron-store": "^12.0.0",
     "react-qr-code": "^2.2.0",
     "wrangler": "^4.140.0"
   },
@@ -36,8 +36,8 @@
     "next": "^16.2.1",
     "nextron": "^10.0.0",
     "postcss": "^8.5.8",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.7.3"
   }
