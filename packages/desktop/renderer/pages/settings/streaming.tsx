@@ -69,7 +69,7 @@ function SettingsStreaming() {
     function setStreamResolution(e){
         setSettings({
             ...settings,
-            stream_resolution: parseInt(e.target.value),
+            stream_resolution: Number.parseInt(e.target.value),
         })
     }
 
