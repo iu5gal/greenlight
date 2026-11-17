@@ -23,6 +23,34 @@ interface startupFlags {
 // Personal build (iu5gal-build): the main window title carries the build name. Not proposed upstream.
 const BUILD_TITLE = 'Greenlight unofficial build by iu5gal'
 
+const DEV_SERVER_ORIGIN = 'http://localhost'
+const DEV_SERVER_PORT_PATTERN = /^\d{1,5}$/
+const MIN_DEV_SERVER_PORT = 1
+const MAX_DEV_SERVER_PORT = 65535
+const DEFAULT_DEV_SERVER_PORT = 3000
+
+/**
+ * Parses the renderer dev-server port that nextron hands to the main process
+ * as a command line argument (`electron . <port> [options]`).
+ *
+ * Command line arguments can be controlled by everything that is able to
+ * launch the application, so the value is strictly validated. Only plain
+ * decimal numbers inside the valid port range are accepted.
+ */
+const parseDevServerPort = (rawPort:string|undefined):number => {
+    if(rawPort === undefined || rawPort === ''){
+        return DEFAULT_DEV_SERVER_PORT
+    }
+
+    const port = Number.parseInt(rawPort, 10)
+
+    if(!DEV_SERVER_PORT_PATTERN.test(rawPort) || !Number.isInteger(port) || port < MIN_DEV_SERVER_PORT || port > MAX_DEV_SERVER_PORT){
+        throw new Error(`Invalid renderer dev-server port: ${rawPort}`)
+    }
+
+    return port
+}
+
 export default class Application {
 
     private _log
@@ -276,8 +304,11 @@ export default class Application {
         if (this._isProduction === true && this._isCi === false) {
             this._mainWindow.loadURL('app://./home.html')
         } else {
-            const port = process.argv[2] || 3000
-            this._mainWindow.loadURL(`http://localhost:${port}/home`)
+            const devServerUrl = new URL(DEV_SERVER_ORIGIN)
+            devServerUrl.port = String(parseDevServerPort(process.argv[2]))
+            devServerUrl.pathname = '/home'
+
+            this._mainWindow.loadURL(devServerUrl.toString())
 
             if(this._isCi !== true){
                 this._mainWindow.webContents.openDevTools()
@@ -311,4 +342,6 @@ export default class Application {
     }
 }
 
-new Application()
+// Bootstrap the app. The Application constructor performs all startup side effects,
+// so the instance is assigned (and exported) instead of being discarded.
+export const application = new Application()
