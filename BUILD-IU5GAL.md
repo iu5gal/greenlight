@@ -26,6 +26,7 @@ pull request verso `unknownskl/greenlight` e viene poi fusa qui.
 | [#1727](https://github.com/unknownskl/greenlight/pull/1727) | `feat/mouse-keyboard-ux` | Mouse e tastiera: cursore di sensibilità del mouse, barra in alto nascosta a mouse bloccato (Cmd+Esc per liberarlo), Esc come tasto Home, tasti mappabili per gli stick |
 | [#1752](https://github.com/unknownskl/greenlight/pull/1752) | `feature/stream-resolution` | Risoluzione dello stream in Impostazioni → Streaming: Auto (come prima), 720p, 1080p, 1440p |
 | [#1764](https://github.com/unknownskl/greenlight/pull/1764) | `chore/electron-45` | Electron 45.3.4 (Chromium 156) e dipendenze aggiornate per sicurezza; macOS 13 minimo; controller Bluetooth come giocatore 1 su macOS |
+| [#1765](https://github.com/unknownskl/greenlight/pull/1765) | `fix/session-token-refresh` | I token Xbox scaduti si rinnovano da soli: console, amici e stream funzionano anche con l'app aperta da ore o dopo la sospensione |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (di vishalrao8) | Numerazione dei controller in Impostazioni → Input. Fusa solo qui |
 
 Lo stato aggiornato di ogni PR è nella pagina della PR stessa: quando il maintainer ne integra una, qui
