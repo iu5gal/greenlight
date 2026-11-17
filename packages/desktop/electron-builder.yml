@@ -18,6 +18,8 @@ publish:
 # Mac OS configuration
 mac:
   category: public.app-category.games
+  # Ad-hoc signature (hardened runtime + entitlements) without a Developer ID: electron-builder 26.18 no longer falls back to it on its own
+  identity: "-"
   entitlements: resources/entitlements.mac.plist
   entitlementsInherit: resources/entitlements.mac.plist
   extendInfo:
