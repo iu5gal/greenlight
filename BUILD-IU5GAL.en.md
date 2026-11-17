@@ -2,7 +2,7 @@
 
 🇮🇹 [Versione italiana](BUILD-IU5GAL.md)
 
-This branch is **my personal build** of [Greenlight](https://github.com/unknownskl/greenlight) 2.4.2:
+This branch is **my personal build** of [Greenlight](https://github.com/unknownskl/greenlight) 2.4.2, released as **2.5.0**:
 the original `main-v2` plus the fixes I have proposed to the maintainer that have not been merged yet.
 **It is not a separate project and it is never proposed upstream**: every change starts in its own branch,
 becomes a pull request to `unknownskl/greenlight`, and is then merged here.
@@ -28,6 +28,9 @@ becomes a pull request to `unknownskl/greenlight`, and is then merged here.
 | [#1764](https://github.com/unknownskl/greenlight/pull/1764) | `chore/electron-45` | Electron 45.3.4 (Chromium 156) and security dependency updates; macOS 13 minimum; Bluetooth controller as player 1 on macOS |
 | [#1765](https://github.com/unknownskl/greenlight/pull/1765) | `fix/session-token-refresh` | Expired Xbox tokens are renewed on their own: consoles, friends and streams keep working with the app open for hours or after sleep |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (by vishalrao8) | Controller numbering in Settings → Input. Merged here only |
+| [#1669](https://github.com/unknownskl/greenlight/pull/1669) | (by davidcollom) | xCloud library loading and catalog cache. Merged here only |
+| [#1754](https://github.com/unknownskl/greenlight/pull/1754) | (by davidcollom) | Small reliability fixes (error handling, Xbox logo as a button). Merged here only |
+| [#1758](https://github.com/unknownskl/greenlight/pull/1758) | (by dependabot) | electron-builder 26.18; here the macOS app is signed ad-hoc explicitly (`mac.identity: "-"`), because 26.18 no longer does it on its own. Merged here only |
 
 The current status of each PR is on the PR page itself: once the maintainer merges one, it simply becomes
 code that is already in `main-v2`.

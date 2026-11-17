@@ -2,7 +2,7 @@
 
 🇬🇧 [English version](BUILD-IU5GAL.en.md)
 
-Questo branch è la **mia build personale** di [Greenlight](https://github.com/unknownskl/greenlight) 2.4.2:
+Questo branch è la **mia build personale** di [Greenlight](https://github.com/unknownskl/greenlight) 2.4.2, pubblicata come **2.5.0**:
 `main-v2` dell'originale più le correzioni che ho proposto al maintainer e che non sono ancora state integrate.
 **Non è un fork separato e non si propone upstream**: ogni modifica nasce in un branch dedicato, diventa una
 pull request verso `unknownskl/greenlight` e viene poi fusa qui.
@@ -28,6 +28,9 @@ pull request verso `unknownskl/greenlight` e viene poi fusa qui.
 | [#1764](https://github.com/unknownskl/greenlight/pull/1764) | `chore/electron-45` | Electron 45.3.4 (Chromium 156) e dipendenze aggiornate per sicurezza; macOS 13 minimo; controller Bluetooth come giocatore 1 su macOS |
 | [#1765](https://github.com/unknownskl/greenlight/pull/1765) | `fix/session-token-refresh` | I token Xbox scaduti si rinnovano da soli: console, amici e stream funzionano anche con l'app aperta da ore o dopo la sospensione |
 | [#1682](https://github.com/unknownskl/greenlight/pull/1682) | (di vishalrao8) | Numerazione dei controller in Impostazioni → Input. Fusa solo qui |
+| [#1669](https://github.com/unknownskl/greenlight/pull/1669) | (di davidcollom) | Caricamento della libreria xCloud e cache del catalogo. Fusa solo qui |
+| [#1754](https://github.com/unknownskl/greenlight/pull/1754) | (di davidcollom) | Piccole correzioni di affidabilità (gestione degli errori, logo Xbox come pulsante). Fusa solo qui |
+| [#1758](https://github.com/unknownskl/greenlight/pull/1758) | (di dependabot) | electron-builder 26.18; qui l'app macOS è firmata ad-hoc in modo esplicito (`mac.identity: "-"`), perché la 26.18 non lo fa più da sola. Fusa solo qui |
 
 Lo stato aggiornato di ogni PR è nella pagina della PR stessa: quando il maintainer ne integra una, qui
 diventa semplicemente codice già presente in `main-v2`.
